@@ -51,22 +51,53 @@ async function run() {
             res.json(service);
         });
 
-        // Find User
+        // Find User with email
         app.get('/finduser/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email: email };
-            console.log(query)
-            const user = await usersCollection.findOne(query);
-            res.send(user)
-            console.log(user)
+            const cursor = usersCollection.find(query);
+            const result = await cursor.toArray();
+            res.json(result);
+            // console.log(user);
         });
 
-        // Create User
-        app.post('/user', async (req, res) => {
+        // Update User
+        app.post('/updateuser/:id', async (req, res) => {
+            const userId = req.params.id;
+            const query = { _id: ObjectId(userId) };
             const user = req.body.user;
-            const result = await usersCollection.insertOne(user)
-            console.log(user)
+
+            const replcement = {
+                number: user.number,
+                location: user.location,
+                desitinations: user.desitinations
+            }
+
+            const result = await usersCollection.replaceOne(query, replcement)
+
             res.send(result)
+            //console.log(req.body.user)
+            // console.log(result)
+
+
+        });
+
+        // Place Order
+        app.post('/placeOrder', async (req, res) => {
+            const user = req.body.user;
+            // console.log(user)
+
+            const result = await usersCollection.insertOne(user)
+            // console.log(result)
+            res.send(result);
+        });
+
+        // Delete Order
+        app.delete('/deleteOrder/:id', async (req, res) => {
+            const userId = req.params.id;
+            const query = { _id: ObjectId(userId) };
+            const result = await usersCollection.deleteOne(query);
+            res.send(result);
         })
 
     } finally {
