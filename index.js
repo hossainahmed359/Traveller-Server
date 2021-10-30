@@ -51,6 +51,13 @@ async function run() {
             res.json(service);
         });
 
+        // Find All Orders
+        app.get('/allOrders', async (req, res) => {
+            const cursor = usersCollection.find({});
+            const result = await cursor.toArray();
+            res.json(result);
+        });
+
         // Find User with email
         app.get('/finduser/:email', async (req, res) => {
             const email = req.params.email;
@@ -61,23 +68,29 @@ async function run() {
             // console.log(user);
         });
 
+
         // Update User
         app.post('/updateuser/:id', async (req, res) => {
             const userId = req.params.id;
+            const userBody = req.body.order;
+            console.log(userBody)
             const query = { _id: ObjectId(userId) };
-            const user = req.body.user;
+
 
             const replcement = {
-                number: user.number,
-                location: user.location,
-                desitinations: user.desitinations
+                email: userBody.email,
+                name: userBody.name,
+                number: userBody.number,
+                localStorage: userBody.location,
+                date: userBody.date,
+                destination: { id: userBody.destination.id, status: 'Approved' }
             }
 
             const result = await usersCollection.replaceOne(query, replcement)
 
-            res.send(result)
-            //console.log(req.body.user)
-            // console.log(result)
+            console.log(result)
+            res.json(result)
+
 
 
         });
@@ -97,8 +110,9 @@ async function run() {
             const userId = req.params.id;
             const query = { _id: ObjectId(userId) };
             const result = await usersCollection.deleteOne(query);
-            res.send(result);
-        })
+            console.log(result)
+            res.json(result);
+        });
 
     } finally {
         //   await client.close();
