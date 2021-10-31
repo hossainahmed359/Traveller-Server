@@ -51,6 +51,13 @@ async function run() {
             res.json(service);
         });
 
+        // Add A New Service
+        app.post('/addService', async (req, res) => {
+            const data = req.body.data;
+            const result = await servicesCollection.insertOne(data)
+            res.json(result)
+        });
+
         // Find All Orders
         app.get('/allOrders', async (req, res) => {
             const cursor = usersCollection.find({});
