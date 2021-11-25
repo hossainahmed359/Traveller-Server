@@ -1,0 +1,17 @@
+
+Database
+User : Madani
+Pass : R0GaLbmuPtwg6jnV
+
+// Assignment 11 Description
+
+Link : https://traveller-d9a90.web.app/home
+
+Website Name : Traveller
+
+Website Facilities
+1.Purpose : This is a tourism related website.Meaning A user can use this website to book a wonderful place for his holidays
+2.Technologies : This website has been built with (HTML, CSS, Bootstrap, Javascript, React, Firebase, Node JS ,Node Express and MongoDb)
+3.Authentication : (Google, Email & Password) authentication system has been implemented here
+4.Multipurpose : This is website serves multiple puropse. It can not only handle client side Orders but also can manage Users(such as delete or approve or add a new service)
+5.Responsiveness : This website is fully resposive. It is usable in any devices.
